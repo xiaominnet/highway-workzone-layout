@@ -1161,10 +1161,11 @@ button, input, select, textarea { font-family: inherit; font-size: 13px; }
               </div>
             </div>
             <div class="field pro-only" id="row-signStrategy">
-              <label>限速标志策略</label>
+              <label>限速方法 (4.0.3)</label>
               <select data-field="signStrategy">
-                <option value="A">策略A：等距200m</option>
-                <option value="B">策略B：末块锁定</option>
+                <option value="A">逐级限速 20km/h/级（推荐）</option>
+                <option value="B">逐级限速 10km/h/级（细档）</option>
+                <option value="C">重复提示限速（Vf连设）</option>
               </select>
             </div>
           </div>
@@ -1523,7 +1524,7 @@ const REVIEW_ITEMS = [
   { id: 'C-01', item: '表 4.0.5 是否含 70km/h 档', val: '120 / 130 / 140 / 160', note: '✔ 已对照交通运输部 JTG H30-2015 核验一致' },
   { id: 'C-02', item: '表 4.0.6 纵向缓冲区 70km/h 档', val: '100 / 120（≤3% / >3%）', note: '✔ 已依据交通运输部 JTG H30-2015 表 4.0.6 将 >3% 档由 130 修正为 120' },
   { id: 'C-03', item: '表 4.0.6 纵向缓冲区 40km/h 档', val: '50 / 60', note: '✔ 已对照 JTG H30-2015 表 4.0.6 核验一致' },
-  { id: 'C-04', item: '逐级限速的表述', val: '宜每100m降10km/h，标志间距≥200m', note: '✔ 已核验 JTG H30-2015 第4.0.3条，系统按级差≤10且间距≥200m双约束实现' },
+  { id: 'C-04', item: '逐级与重复限速表述', val: '每100m降10km/h / 间距≥200m / 重复提示', note: '✔ 已核验 JTG H30-2015 第4.0.3条：支持20km/h/200m逐级(避让0m+长段末级重复)、10km/h细档及重复提示限速' },
   { id: 'C-05', item: '表 4.0.4-1 表注 Q 的口径', val: '高峰小时交通量 ÷ 剩余通行车道数', note: '⚠ 需结合当地标准确认是否按小客车当量(pcu)折算及路肩折算' },
   { id: 'C-06', item: '交通锥间距条号与分区对应', val: '过渡/工作区≤4m；其他区≤10m', note: '✔ 已核验 JTG H30-2015 第5章：过渡/工作区≤4m，缓冲区/下游≤10m' },
   { id: 'C-07', item: '封闭路肩限速可提高幅度', val: '提高 10km/h（上限90）', note: '✔ 已核验第4.0.3条：完全封闭路肩可提高10km/h（上限90）' },
@@ -1832,9 +1833,9 @@ const RULES = [
     id: 'R-04',
     level: 'red',
     cond: (ctx) => ctx.nature === 'fixed' && ctx.signsOverflow,
-    title: (ctx) => `逐级限速标志排布超出警告区（当前 S=${ctx.S}m，至少需 ${ctx.minSForSigns}m）`,
+    title: (ctx) => `限速标志排布超出警告区（当前 S=${ctx.S}m，至少需 ${ctx.minSForSigns}m）`,
     clause: 'JTG H30-2015 4.0.3',
-    advice: (ctx) => `请延长警告区 S 至 ≥${ctx.minSForSigns}m，或按程序审批调整作业时段/分流后再核定限速级数。`
+    advice: (ctx) => `依据 4.0.3“相邻限速标志间距不宜小于200m”，当前序列需 ${ctx.minSForSigns}m。请延长警告区 S，或切换至“20km/h逐级(A)/重复提示限速(C)”。`
   },
   {
     id: 'R-05',
@@ -1911,10 +1912,10 @@ const RULES = [
   {
     id: 'R-14',
     level: 'amber',
-    cond: (ctx) => ctx.nature === 'fixed' && ctx.signSpacingShort,
-    title: '限速标志平均间距不足 200m（或策略 B 已自动降级）',
+    cond: (ctx) => ctx.nature === 'fixed' && ctx.signSpacingShort && !ctx.signsOverflow,
+    title: '限速标志平均间距不足 200m',
     clause: 'JTG H30-2015 4.0.3',
-    advice: (ctx) => `若采用多级限速且需保证级间间距 ≥200m，建议延长警告区 S 至 ≥${ctx.minSForSigns}m。`
+    advice: (ctx) => `依据 4.0.3“相邻限速标志间距不宜小于200m”，建议延长警告区 S 至 ≥${ctx.minSForSigns}m 或改用重复提示限速方法。`
   },
   {
     id: 'R-15',
@@ -2118,7 +2119,7 @@ if (typeof module !== 'undefined') {
       G: num(d.G, 300, 30, 10000),
       rampLength: num(d.rampLength, 300, 20, 2000),
       mobileState: d.mobileState === 'stop' ? 'stop' : 'slow',
-      signStrategy: d.signStrategy === 'B' ? 'B' : 'A',
+      signStrategy: ['A', 'B', 'C'].includes(d.signStrategy) ? d.signStrategy : 'A',
       lsTrack: d.lsTrack === 'B' ? 'B' : 'A',
       night: Boolean(d.night),
       hasStrobe: d.hasStrobe !== undefined ? Boolean(d.hasStrobe) : false,
@@ -2346,46 +2347,69 @@ if (typeof module !== 'undefined') {
     trace.Z = { value: Z, table: '4.0.9', clause: '4.0.9', formula: `规范固定取值 ${Z}m`, mod: '' };
     trace.Hh = { value: Hh, table: '4.0.6', clause: '4.0.6', formula: `不宜大于 ${Hh}m`, mod: '' };
 
-    // ⑦ 生成逐级限速标志序列 (§6.9)
-    const kSigns = Math.max(0, Math.round((input.speed - Vf) / 10));
-    const minSForSigns = kSigns <= 1 ? 100 : (kSigns - 1) * C.signMinGap + C.signReactionGap;
+    // ⑦ 生成限速标志序列 (JTG H30-2015 第4.0.3条：逐级限速宜每100m降10km/h，相邻间距不宜小于200m；或重复提示限速)
+    const signStrategyUsed = ['A', 'B', 'C'].includes(input.signStrategy) ? input.signStrategy : 'A';
+    const buildStepValues = (startSpeed, targetVf, stepSize) => {
+      const vals = [];
+      let cur = startSpeed;
+      while (cur - stepSize > targetVf) {
+        cur -= stepSize;
+        vals.push(cur);
+      }
+      if (targetVf < startSpeed) vals.push(targetVf);
+      return vals;
+    };
+    const coreVals = Vf >= input.speed
+      ? []
+      : (signStrategyUsed === 'C'
+          ? (S >= 1200 ? [Vf, Vf, Vf] : [Vf, Vf])
+          : buildStepValues(input.speed, Vf, signStrategyUsed === 'B' ? 10 : 20));
+    const kSigns = coreVals.length;
+    const minSForSigns = kSigns === 0 ? 0 : kSigns * C.signMinGap + C.signReactionGap;
     let signs = [];
     let signsOverflow = false;
     let signSpacingShort = false;
-    let signStrategyUsed = input.signStrategy;
 
     if (input.nature === 'fixed' && kSigns > 0) {
       if (input.pos === 'ramp') {
         // 匝道短时最前端标志前置至匝道入口，按标准间距倒推布置坐标
         for (let i = 0; i < kSigns; i++) {
-          const val = input.speed - (i + 1) * 10;
-          const at = Math.max(0, S - C.signReactionGap - (kSigns - 1 - i) * C.signMinGap);
-          // 如果超出了S=0，则说明在匝道入口上游
           const exactAt = S - C.signReactionGap - (kSigns - 1 - i) * C.signMinGap;
-          signs.push({ val, at: exactAt, upstreamOfRamp: exactAt < 0 });
+          signs.push({ val: coreVals[i], at: exactAt, upstreamOfRamp: exactAt < 0, isRepeat: signStrategyUsed === 'C' && i > 0 });
+        }
+      } else if (signStrategyUsed === 'C') {
+        const lastRepeatAt = Math.max(C.signMinGap, S - 300);
+        if (S < minSForSigns) {
+          signsOverflow = true;
+          signSpacingShort = true;
+        }
+        if (kSigns === 3 && lastRepeatAt - C.signMinGap >= 2 * C.signMinGap) {
+          const midAt = Math.round((C.signMinGap + lastRepeatAt) / 2);
+          signs = [
+            { val: coreVals[0], at: C.signMinGap, isRepeat: false },
+            { val: coreVals[1], at: midAt, isRepeat: true },
+            { val: coreVals[2], at: lastRepeatAt, isRepeat: true }
+          ];
+        } else {
+          for (let i = 0; i < 2; i++) {
+            const at = i === 0 ? C.signMinGap : Math.max(2 * C.signMinGap, Math.min(lastRepeatAt, S - C.signReactionGap));
+            signs.push({ val: Vf, at, isRepeat: i > 0 });
+          }
         }
       } else {
-        if (input.signStrategy === 'B' && kSigns > 1) {
-          const avgGap = (S - C.signReactionGap) / (kSigns - 1);
-          if (avgGap < C.signMinGap) {
-            signStrategyUsed = 'A';
-            signSpacingShort = true;
-          } else {
-            for (let i = 0; i < kSigns; i++) {
-              const val = input.speed - (i + 1) * 10;
-              const at = Math.round(i * avgGap);
-              signs.push({ val, at });
-            }
-          }
+        // A（推荐 20km/h 步长 / ≥200m）或 B（10km/h 细档 / ≥200m），首块限速避让 0m 施工标志
+        for (let i = 0; i < kSigns; i++) {
+          signs.push({ val: coreVals[i], at: (i + 1) * C.signMinGap, isRepeat: false });
         }
-        if (signStrategyUsed === 'A' || kSigns === 1) {
-          signs = [];
-          for (let i = 0; i < kSigns; i++) {
-            const val = input.speed - (i + 1) * 10;
-            signs.push({ val, at: i * C.signMinGap });
-          }
-          if (kSigns > 1 && (kSigns - 1) * C.signMinGap > S - C.signReactionGap) {
-            signsOverflow = true;
+        if (minSForSigns > S) {
+          signsOverflow = true;
+          signSpacingShort = true;
+        } else {
+          // 长警告区末尾距过渡区富余足够时，在 S-300m 增设 1 块终值 Vf 重复提示标志
+          const repeatAt = S - 300;
+          const lastCoreAt = signs[signs.length - 1].at;
+          if (S >= 800 && repeatAt - lastCoreAt >= C.signMinGap) {
+            signs.push({ val: Vf, at: repeatAt, isRepeat: true });
           }
         }
       }
@@ -2552,11 +2576,17 @@ if (typeof module !== 'undefined') {
       });
       signs.forEach((sg, idx) => {
         const atStr = sg.at < 0 ? `匝道入口前 ${Math.abs(sg.at)} m` : `${sg.at} m`;
+        const itemLabel = signStrategyUsed === 'C'
+          ? `第 ${idx + 1} 次重复限速标志 (${sg.val} km/h)`
+          : (sg.isRepeat ? `重复提示限速标志 (${sg.val} km/h)` : `第 ${idx + 1} 级限速标志 (${sg.val} km/h)`);
+        const stepNote = signStrategyUsed === 'C'
+          ? '重复提示终值限速'
+          : (sg.isRepeat ? '长警告区末段终值重复提醒' : (idx === 0 ? '避让0m施工牌起算，逐级降至目标限速' : '相邻限速标志间距 ≥200m'));
         coords.push({
           at: sg.at,
           atLabel: atStr,
-          item: `第 ${idx + 1} 级限速标志 (${sg.val} km/h)`,
-          detail: `${sideDescShort}，限速 ${sg.val} km/h`,
+          item: itemLabel,
+          detail: `${sideDescShort}，限速 ${sg.val} km/h（${stepNote}）`,
           clause: 'JTG H30-2015 4.0.3 / 6.1.2'
         });
       });
@@ -2698,9 +2728,9 @@ if (typeof module !== 'undefined') {
       });
       if (signs.length > 0) {
         facilities.push({
-          name: '逐级限速标志',
+          name: signStrategyUsed === 'C' ? '重复提示限速标志' : '逐级/重复限速标志',
           qty: `${signs.length * sideFactor} 块`,
-          spec: `序列：${signs.map(s => s.val).join('→')} km/h（${sideDescShort}）`,
+          spec: `序列：${signs.map(s => s.isRepeat ? `${s.val}(复)` : s.val).join('→')} km/h（${sideDescShort}）`,
           clause: '4.0.3 / 6.1.2'
         });
       }
@@ -4057,7 +4087,7 @@ if (typeof module !== 'undefined') {
         <div class="kpi-box"><div class="kpi-label"><span>单车道交通量</span><span>4.0.4</span></div><div class="kpi-val">${plan.Q}</div><div class="kpi-sub">pcu/(h·ln)</div></div>
       `
       : `
-        <div class="kpi-box" data-trace="Vf"><div class="kpi-label"><span>最终限速 Vf</span><span>4.0.3 ▸</span></div><div class="kpi-val">${plan.Vf} km/h</div><div class="kpi-sub">${plan.signs.length} 级限速：${plan.signs.map(s => s.val).join('→') || '无'}</div></div>
+        <div class="kpi-box" data-trace="Vf"><div class="kpi-label"><span>最终限速 Vf</span><span>4.0.3 ▸</span></div><div class="kpi-val">${plan.Vf} km/h</div><div class="kpi-sub">${plan.signStrategyUsed === 'C' ? '重复限速' : '限速序列'} (${plan.signs.length}处)：${plan.signs.map(s => s.val).join('→') || '无'}</div></div>
         <div class="kpi-box" data-trace="S"><div class="kpi-label"><span>控制区总长 LΣ</span><span>4.0.1 ▸</span></div><div class="kpi-val">${plan.totalLen} m</div><div class="kpi-sub">S=${plan.S} / Ls=${plan.Ls} / H=${plan.H} / G=${plan.G}</div></div>
         <div class="kpi-box" data-trace="tma"><div class="kpi-label"><span>防撞缓冲车</span><span>指引29 ▸</span></div><div class="kpi-val">${plan.tma.need ? `≥${plan.tma.level}K` : '可不设'}</div><div class="kpi-sub">${plan.tma.need ? `${plan.tma.count}台 · 距工作区${plan.tma.d}m${plan.tma.xFromBuffer > 0 ? `(前移${plan.tma.xFromBuffer}m)` : ''}` : '符合豁免条件'}</div></div>
         <div class="kpi-box" data-scroll-target="cone-breakdown"><div class="kpi-label"><span>交通锥总用量</span><span>5.0.2 ▾</span></div><div class="kpi-val">${plan.coneTotal} 个</div><div class="kpi-sub">${plan.input.coneSpare ? `含10%备损 ${plan.coneTotalSpare} 个` : '点击定位分区间距明细'}</div></div>
@@ -4205,8 +4235,10 @@ if (typeof module !== 'undefined') {
 
     const levelLabel = { red: '红线阻断', amber: '警示确认', info: '规范提示' };
     const fixActionForRisk = (r) => {
-      if (r.id === 'R-04' && state.input.signStrategy !== 'B') {
-        return { act: 'strategyB', label: '⚡ 一键切至策略 B 自动适配警告区' };
+      if (r.id === 'R-04') {
+        return state.input.signStrategy !== 'A'
+          ? { act: 'strategyA', label: '⚡ 切至 20km/h 逐级限速 (方案A)' }
+          : { act: 'strategyC', label: '⚡ 切至重复提示限速 (方案C)' };
       }
       if (r.id === 'R-05') {
         const cap = state.input.borrowOpposite ? 6000 : 4000;
@@ -4218,8 +4250,8 @@ if (typeof module !== 'undefined') {
       if (r.id === 'R-13' && state.input.lsTrack !== 'B') {
         return { act: 'lsTrackB', label: '⚡ 改用渐变率折算值（方案B）' };
       }
-      if (r.id === 'R-14' && state.input.signStrategy !== 'B') {
-        return { act: 'strategyB', label: '⚡ 切至策略 B 拉大限速间距' };
+      if (r.id === 'R-14' && state.input.signStrategy !== 'C') {
+        return { act: 'strategyC', label: '⚡ 切至重复提示限速 (方案C)' };
       }
       if (r.id === 'R-15') {
         return { act: 'nightEquip', label: '+ 一键配齐频闪灯与施工照明' };
@@ -4251,7 +4283,9 @@ if (typeof module !== 'undefined') {
   }
 
   function applyQuickFix(act) {
-    if (act === 'strategyB') state.input.signStrategy = 'B';
+    if (act === 'strategyA') state.input.signStrategy = 'A';
+    else if (act === 'strategyB') state.input.signStrategy = 'B';
+    else if (act === 'strategyC') state.input.signStrategy = 'C';
     else if (act === 'capG') state.input.G = state.input.borrowOpposite ? 6000 : 4000;
     else if (act === 'addGuide') state.input.hasGuide = true;
     else if (act === 'lsTrackB') state.input.lsTrack = 'B';
