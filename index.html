@@ -204,6 +204,128 @@ button, input, select, textarea { font-family: inherit; font-size: 13px; }
 .param-group.collapsed .param-group-head { border-bottom: none; }
 .param-group.collapsed .param-group-head span:last-child { transform: rotate(-90deg); display: inline-block; }
 
+.mode-switch-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.mode-tabs {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+  background: #e2e8f0;
+  padding: 3px;
+  border-radius: 8px;
+}
+
+.mode-tab {
+  border: none;
+  background: transparent;
+  padding: 5px 6px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: all 0.14s ease;
+  white-space: nowrap;
+}
+
+.mode-tab.active {
+  background: #ffffff;
+  color: #1d4ed8;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.14);
+}
+
+.pro-active-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #f59e0b;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.sidebar.simple-mode .pro-only { display: none !important; }
+.sidebar:not(.simple-mode) .simple-only { display: none !important; }
+.sidebar.simple-mode .full-in-simple { grid-column: 1 / -1; }
+
+.quick-chips-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.sidebar.simple-mode .quick-chips-3 .chip-btn {
+  padding: 5px 4px;
+  font-size: 11.5px;
+  text-align: center;
+  border-radius: 6px;
+}
+
+.simple-meta-note {
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.simple-meta-note.is-warn {
+  color: #b45309;
+  font-weight: 600;
+}
+
+.simple-meta-note.is-danger {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.simple-meta-pill {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #1d4ed8;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: 1px 6px;
+  border-radius: 999px;
+}
+
+.simple-pro-hint {
+  width: 100%;
+  margin-top: 2px;
+  padding: 8px 10px;
+  border: 1px dashed #93c5fd;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #475569;
+  font-size: 11.5px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.14s ease;
+}
+
+.simple-pro-hint:hover {
+  background: #eff6ff;
+  border-color: #2563eb;
+  color: #1d4ed8;
+}
+
+.simple-pro-hint strong {
+  color: #1d4ed8;
+}
+
 .sidebar-quick-bar {
   display: flex;
   justify-content: space-between;
@@ -685,6 +807,41 @@ button, input, select, textarea { font-family: inherit; font-size: 13px; }
 .toast { position: fixed; bottom: 64px; right: 18px; background: #0f172a; color: #fff; padding: 9px 14px; border-radius: 6px; font-size: 12.5px; z-index: 80; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
 .toast.show { opacity: 1; }
 
+/* Packing & Stake Conversion Cards (建议三) */
+.packing-card { background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); border-left: 4px solid #ea580c; }
+.packing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(132px, 1fr)); gap: 8px; }
+.packing-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 7px; padding: 7px 9px; display: flex; flex-direction: column; gap: 2px; }
+.packing-item-head { font-size: 11px; font-weight: 600; color: #475569; display: flex; align-items: center; gap: 4px; }
+.packing-item-val { font-size: 15px; font-weight: 800; color: #0f172a; }
+.packing-item-sub { font-size: 10.5px; color: #64748b; }
+
+.stake-summary-bar {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e3a8a;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 11.5px;
+  margin-bottom: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px;
+}
+.stake-badge {
+  display: inline-block;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 11.5px;
+  font-weight: 700;
+  margin-right: 4px;
+}
+.coords-rel { color: #475569; font-size: 11px; font-weight: 600; white-space: nowrap; }
+
 /* Responsive Laptop / Tablet Breakpoints (prevent right-panel crushing KPI strip & SVG) */
 @media (max-width: 1260px) {
   .app-shell { grid-template-columns: 276px 1fr; }
@@ -774,13 +931,17 @@ button, input, select, textarea { font-family: inherit; font-size: 13px; }
   </div>
 
   <div class="app-shell">
-    <aside class="sidebar no-print" id="sidebar">
-      <div class="sidebar-quick-bar">
-        <span>⚡ 极简参数模式（高阶项可展开）</span>
-        <div style="display:flex;gap:4px;">
-          <button type="button" class="mini-link-btn" id="btn-sidebar-toggle-all">全部展开</button>
-          <button type="button" class="mini-link-btn" id="btn-reset-default">重置默认</button>
+    <aside class="sidebar no-print simple-mode" id="sidebar">
+      <div class="mode-switch-bar">
+        <div class="mode-tabs" id="sidebar-mode-tabs">
+          <button type="button" class="mode-tab active" data-ui-mode="simple">⚡ 极简出图</button>
+          <button type="button" class="mode-tab" data-ui-mode="pro">🔧 专业精调<span class="pro-active-pill" id="pro-active-badge" style="display:none;"></span></button>
         </div>
+        <button type="button" class="mini-link-btn" id="btn-reset-default" title="恢复标准默认工况">重置</button>
+      </div>
+      <div class="sidebar-quick-bar pro-only">
+        <span>已展示全部高阶工程参数</span>
+        <button type="button" class="mini-link-btn" id="btn-sidebar-toggle-all">全部展开</button>
       </div>
 
       <div class="param-group">
@@ -813,7 +974,7 @@ button, input, select, textarea { font-family: inherit; font-size: 13px; }
               </select>
             </div>
           </div>
-          <div class="field-row">
+          <div class="field-row pro-only">
             <div class="field">
               <label>车道宽度 (m)</label>
               <select data-field="laneWidth">
@@ -829,16 +990,17 @@ button, input, select, textarea { font-family: inherit; font-size: 13px; }
             </div>
           </div>
           <div class="field-row">
-            <div class="field">
-              <label>高峰交通量 (pcu/h)</label>
-              <input type="number" step="50" min="0" max="10000" data-field="volume" id="inp-volume">
-              <div class="quick-chips" title="参考流量快捷填入，正式交底须按监控/实测小时交通量核准">
-                <button type="button" class="chip-btn" data-quick-field="volume" data-quick-val="600">畅通600</button>
-                <button type="button" class="chip-btn" data-quick-field="volume" data-quick-val="1200">常规1200</button>
-                <button type="button" class="chip-btn" data-quick-field="volume" data-quick-val="1800">繁忙1800</button>
+            <div class="field full-in-simple">
+              <label>车流繁忙程度 <span class="pro-only" style="font-weight:400;color:#64748b;">(pcu/h)</span></label>
+              <input type="number" step="50" min="0" max="10000" data-field="volume" id="inp-volume" class="pro-only">
+              <div class="quick-chips quick-chips-3" title="参考流量快捷填入，正式交底须按监控/实测小时交通量核准">
+                <button type="button" class="chip-btn" data-quick-field="volume" data-quick-val="600">畅通 600</button>
+                <button type="button" class="chip-btn" data-quick-field="volume" data-quick-val="1200">常规 1200</button>
+                <button type="button" class="chip-btn" data-quick-field="volume" data-quick-val="1800">繁忙 1800</button>
               </div>
+              <div class="simple-only simple-meta-note" id="simple-vol-note"></div>
             </div>
-            <div class="field">
+            <div class="field full-in-simple">
               <label>纵坡坡度</label>
               <div class="seg-toggle" data-seg-for="slope">
                 <button type="button" class="seg-btn" data-seg-val="le3">≤3% 平缓</button>
@@ -881,11 +1043,16 @@ button, input, select, textarea { font-family: inherit; font-size: 13px; }
             </div>
           </div>
           <div class="field-row">
-            <div class="field">
-              <label>作业时长 (h)</label>
-              <input type="number" step="0.5" min="0.2" max="720" data-field="duration">
+            <div class="field full-in-simple">
+              <label>作业时长 <span class="pro-only" style="font-weight:400;color:#64748b;">(h)</span><span class="simple-only simple-meta-pill" id="simple-type-badge">短期 · 6h</span></label>
+              <input type="number" step="0.5" min="0.2" max="720" data-field="duration" class="pro-only">
+              <div class="quick-chips quick-chips-3" id="duration-quick-chips">
+                <button type="button" class="chip-btn" data-quick-duration="2">≤4h 临时</button>
+                <button type="button" class="chip-btn" data-quick-duration="6">4~24h 短期</button>
+                <button type="button" class="chip-btn" data-quick-duration="48">&gt;24h 长期</button>
+              </div>
             </div>
-            <div class="field" id="row-typeOverride">
+            <div class="field pro-only" id="row-typeOverride">
               <label>作业类型 <span class="badge badge-override" id="type-override-badge" style="display:none;">已覆盖</span></label>
               <select data-field="typeOverride">
                 <option value="auto">自动判定</option>
@@ -896,16 +1063,16 @@ button, input, select, textarea { font-family: inherit; font-size: 13px; }
             </div>
           </div>
           <div class="field-row">
-            <div class="field" id="row-G">
+            <div class="field full-in-simple" id="row-G">
               <label>工作区长度 G (m)</label>
               <input type="number" step="10" min="30" max="10000" data-field="G" id="inp-G">
-              <div class="quick-chips">
-                <button type="button" class="chip-btn" data-quick-field="G" data-quick-val="100">100m</button>
-                <button type="button" class="chip-btn" data-quick-field="G" data-quick-val="300">300m</button>
-                <button type="button" class="chip-btn" data-quick-field="G" data-quick-val="500">500m</button>
+              <div class="quick-chips quick-chips-3">
+                <button type="button" class="chip-btn" data-quick-field="G" data-quick-val="100">100 m</button>
+                <button type="button" class="chip-btn" data-quick-field="G" data-quick-val="300">300 m</button>
+                <button type="button" class="chip-btn" data-quick-field="G" data-quick-val="500">500 m</button>
               </div>
             </div>
-            <div class="field" id="row-signStrategy">
+            <div class="field pro-only" id="row-signStrategy">
               <label>限速标志策略</label>
               <select data-field="signStrategy">
                 <option value="A">策略A：等距200m</option>
@@ -943,8 +1110,8 @@ button, input, select, textarea { font-family: inherit; font-size: 13px; }
         </div>
       </div>
 
-      <div class="param-group collapsed" data-collapsible="adv">
-        <div class="param-group-head"><span>⑤ 工程台账信息（交底单用 · 可点击填写）</span><span>▾</span></div>
+      <div class="param-group">
+        <div class="param-group-head"><span>⑤ 工程台账与桩号定位（自动记常用路段）</span><span>▾</span></div>
         <div class="param-group-body">
           <div class="field">
             <label>项目 / 路段名称</label>
@@ -952,26 +1119,51 @@ button, input, select, textarea { font-family: inherit; font-size: 13px; }
           </div>
           <div class="field-row">
             <div class="field">
-              <label>桩号范围</label>
+              <label>基准桩号</label>
               <input type="text" data-field="stakeNo" maxlength="24" placeholder="K125+300">
             </div>
+            <div class="field">
+              <label>行驶方向</label>
+              <div class="seg-toggle" data-seg-for="stakeDirection">
+                <button type="button" class="seg-btn" data-seg-val="up">上行 K+ ↑</button>
+                <button type="button" class="seg-btn" data-seg-val="down">下行 K- ↓</button>
+              </div>
+              <select data-field="stakeDirection" style="display:none;">
+                <option value="up">上行（桩号递增 K+）</option>
+                <option value="down">下行（桩号递减 K-）</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>输入桩号代表位置</label>
+            <div class="seg-toggle" data-seg-for="stakeAnchor">
+              <button type="button" class="seg-btn" data-seg-val="work">工作区起点（施工点）</button>
+              <button type="button" class="seg-btn" data-seg-val="warning">警告区起点（0m）</button>
+            </div>
+            <select data-field="stakeAnchor" style="display:none;">
+              <option value="work">工作区起点</option>
+              <option value="warning">警告区起点</option>
+            </select>
+            <div class="simple-meta-note" id="stake-anchor-preview"></div>
+          </div>
+          <div class="field-row pro-only">
             <div class="field">
               <label>交底日期</label>
               <input type="date" data-field="date">
             </div>
+            <div class="field">
+              <label>作业单位</label>
+              <input type="text" data-field="company" maxlength="20" placeholder="作业班组/单位名称">
+            </div>
           </div>
-          <div class="field">
+          <div class="field pro-only">
             <label>作业内容</label>
             <input type="text" data-field="workContent" maxlength="40" placeholder="如：监控杆件检修">
-          </div>
-          <div class="field">
-            <label>作业单位</label>
-            <input type="text" data-field="company" maxlength="20" placeholder="作业班组/单位名称">
           </div>
         </div>
       </div>
 
-      <div class="param-group collapsed" data-collapsible="adv">
+      <div class="param-group collapsed pro-only" data-collapsible="adv">
         <div class="param-group-head"><span>⑥ 高阶与特殊环境（桥隧 / 借道 / 加密 · 可选）</span><span>▾</span></div>
         <div class="param-group-body">
           <label class="check-row"><input type="checkbox" data-field="hasSignVehicle"> 另配移动式标志车</label>
@@ -999,6 +1191,10 @@ button, input, select, textarea { font-family: inherit; font-size: 13px; }
           </div>
         </div>
       </div>
+
+      <button type="button" class="simple-only simple-pro-hint" id="btn-open-pro-mode">
+        需桥隧 / 借道 / 车道宽 / 锥桶加密？点此切换 <strong>专业精调 ▸</strong>
+      </button>
     </aside>
 
     <main class="main-area">
@@ -1037,6 +1233,14 @@ button, input, select, textarea { font-family: inherit; font-size: 13px; }
             <div class="kpi-strip" id="kpi-strip"></div>
             <div class="trace-panel" id="trace-panel"></div>
 
+            <div class="card packing-card" id="packing-card">
+              <div class="card-head">
+                <span class="card-title">🚚 出门装车备料清点卡（一眼核对带多少车 / 锥桶 / 标牌）</span>
+                <button type="button" class="btn btn-sm no-print" id="btn-copy-packing">📋 复制备料清单</button>
+              </div>
+              <div class="packing-grid" id="packing-grid"></div>
+            </div>
+
             <div class="card">
               <div class="card-head">
                 <span class="card-title">控制区区段长度表（点击行展开规范推导依据）</span>
@@ -1049,12 +1253,13 @@ button, input, select, textarea { font-family: inherit; font-size: 13px; }
 
             <div class="card">
               <div class="card-head">
-                <span class="card-title">现场设施布设坐标表（距警告区起点 K+0 米数）</span>
+                <span class="card-title">现场设施布设坐标表（绝对桩号 + 距警告区起点米数）</span>
                 <button type="button" class="btn btn-sm no-print" id="btn-copy-coords">📋 复制群口令</button>
               </div>
+              <div class="stake-summary-bar" id="stake-summary-bar" style="display:none;"></div>
               <div class="cone-strip" id="cone-breakdown" style="display:none;"></div>
               <table class="data-table">
-                <thead><tr><th>布设位置</th><th>设施名称</th><th>布设规格与要点</th><th>条号</th></tr></thead>
+                <thead><tr><th>桩号 / 相对位置</th><th>设施名称</th><th>布设规格与要点</th><th>条号</th></tr></thead>
                 <tbody id="coords-table-body"></tbody>
               </table>
             </div>
@@ -1355,8 +1560,8 @@ const CHECKLIST_ITEMS = [
     text: '防撞缓冲车检测碰撞等级满足要求（≥max(Vf,70)K），且检验报告在有效期内、车载缓冲垫完好无变形',
     clause: '越交〔2025〕110号 第十九、二十条' },
   { id: 'C1-07', stage: 1, key: false, when: 'tma',
-    text: '防撞缓冲车导向箭头灯、爆闪警示灯、倒车影像及语音报警装置测试正常，操作员持证上岗',
-    clause: '越交〔2025〕110号 第八、十七条' },
+    text: '防撞缓冲车导向箭头灯、爆闪警示灯、倒车影像、语音报警正常；严禁防撞车后部或缓冲垫装载人员物品，操作员持证上岗',
+    clause: '越交〔2025〕110号 第八、十七、二十六条' },
   { id: 'C1-08', stage: 1, key: false, when: 'signVehicle',
     text: '移动式标志车车载LED导向牌及警示灯工作正常（注意：不得以标志车替代防撞缓冲车）',
     clause: '越交〔2025〕110号 第十八条' },
@@ -1387,8 +1592,8 @@ const CHECKLIST_ITEMS = [
     text: '双向八车道及以上路段，已在非封闭侧路侧同步增设施工及逐级限速标志（路肩封闭时仅起点设施工标志）',
     clause: 'JTG H30-2015 6.1.2' },
   { id: 'C2-05', stage: 2, key: false, when: 'fixed',
-    text: '交通锥按规定间距连续摆放：过渡区与工作区≤4m、纵向缓冲区与下游过渡区≤10m，线形顺直无缺口',
-    clause: 'JTG H30-2015 5.0.2 / 5.0.3' },
+    text: '交通锥按规定间距连续摆放：过渡区与工作区≤4m、纵向缓冲区与下游过渡区≤10m（隧道内全域≤4m），线形顺直无缺口',
+    clause: 'JTG H30-2015 5.0.2 / 5.0.3 / 10.1.3' },
   { id: 'C2-06', stage: 2, key: false, when: 'fixed',
     text: '已保留横向缓冲区 Hh≤0.5m，封闭边界与社会通行车道保持清晰隔离且未侵占行车净宽',
     clause: 'JTG H30-2015 4.0.6' },
@@ -1417,8 +1622,8 @@ const CHECKLIST_ITEMS = [
     text: '纵坡>3%下坡路段已延长纵向缓冲区并在缓冲区末端/工作区前布设刚性防护设施',
     clause: 'JTG H30-2015 4.0.6 / 5.0.5' },
   { id: 'C2-15', stage: 2, key: true,  when: 'night',
-    text: '夜间作业照明已架设于工作区侧面且灯具朝向背对非封闭通行车道，未对来车产生眩光；频闪灯已开启',
-    clause: 'JTG H30-2015 3.0.12' },
+    text: '夜间作业照明设于工作区侧面且背对通行车道；黄蓝警示频闪灯可视≥150m，相邻警示灯距≤3倍锥距（黄黑警示路栏已点亮）',
+    clause: 'JTG H30-2015 3.0.12 / 5.0.7 / 14.0.7' },
   { id: 'C2-16', stage: 2, key: false, when: 'mobile',
     text: '移动作业车队已按规范队列编组并保持表1规定跟随距离（作业车与防撞车间距满足停/慢驶对应距离）',
     clause: '越交〔2025〕110号 表1' },
@@ -1434,14 +1639,14 @@ const CHECKLIST_ITEMS = [
     text: '防撞缓冲车防撞垫处于完全展开并锁止的“全程防护”状态，作业期间严禁擅自收起或挪作他用',
     clause: '越交〔2025〕110号 第十五条' },
   { id: 'C3-04', stage: 3, key: false, when: 'tma',
-    text: '防撞缓冲车驾驶室内不得留人（移动作业驾驶人员系好安全带除外），车前与工作区之间不得有人员滞留',
-    clause: '越交〔2025〕110号 第二十七、二十九条' },
+    text: '缓冲车展开前已拔除安全销、严禁车尾载人载物，停放后驾驶室内不得留人（移动作业系好安全带除外），车前至工作区严禁人员滞留',
+    clause: '越交〔2025〕110号 第二十六、二十七、二十九条' },
   { id: 'C3-05', stage: 3, key: true,  when: 'mobile',
     text: '移动作业过程中防撞垫保持全程防护，严禁在行车道上直接打开或收起防撞垫，车队保持安全跟随距离',
     clause: '越交〔2025〕110号 第十六条' },
   { id: 'C3-06', stage: 3, key: false, when: 'guide',
-    text: '交通引导员站位于上游安全视距良好的非行车位置，高空车/工程车进出封闭区时全程指挥避让社会车辆',
-    clause: 'JTG H30-2015 6.1.5' },
+    text: '交通引导员站位于上游安全视距良好的非行车位置（隧道内连续执勤≤4h轮换），工程车辆须顺行经下游过渡区进出封闭区',
+    clause: 'JTG H30-2015 6.1.5 / 10.1.6' },
   { id: 'C3-07', stage: 3, key: false, when: 'fixed',
     text: '定时巡查锥桶及标志牌状态，被风吹倒或车辆刮碰移位的设施已第一时间扶正复位',
     clause: 'JTG H30-2015 5.0.1' },
@@ -1555,10 +1760,10 @@ const RULES = [
   {
     id: 'R-07',
     level: 'amber',
-    cond: (ctx) => ctx.tma.need && ctx.nature === 'fixed' && ctx.H > ctx.tma.dmax && Math.max(ctx.Vf, ctx.tmaMinLevel) >= 70,
+    cond: (ctx) => ctx.tma.need && ctx.nature === 'fixed' && ctx.H > ctx.tma.dmax && ctx.Vf >= 70,
     title: (ctx) => `缓冲区 H = ${ctx.H}m > 净空上限 ${ctx.tma.dmax}m，防撞缓冲车须前移 ${ctx.tma.xFromBuffer}m`,
     clause: '越交〔2025〕110号 第二十九条',
-    advice: (ctx) => `切勿停在缓冲区起点！防撞车须前移 ${ctx.tma.xFromBuffer}m 停放，使其车前至工作区起点的纵向净空保持在 50~100m（当前取 ${ctx.tma.d}m）。`
+    advice: (ctx) => `切勿停在缓冲区起点！限速≥70km/h时防撞车须前移 ${ctx.tma.xFromBuffer}m 停放，使其车前至工作区起点的纵向净空保持在 50~100m（当前取 ${ctx.tma.d}m）。`
   },
   {
     id: 'R-08',
@@ -1620,9 +1825,9 @@ const RULES = [
     id: 'R-15',
     level: 'amber',
     cond: (ctx) => ctx.input.night && (!ctx.input.hasStrobe || !ctx.input.hasLighting),
-    title: '夜间/雾天作业未配齐施工照明与警示频闪灯',
-    clause: 'JTG H30-2015 3.0.12 / 3.0.13',
-    advice: '夜间/低能见度作业必须开启频闪警示灯并布设工作区照明（灯具朝向背对非封闭车道），所有设施须具高反光性能。'
+    title: '夜间/雾天作业未配齐施工照明与黄蓝警示频闪灯',
+    clause: 'JTG H30-2015 3.0.12 / 5.0.7 / 14.0.7',
+    advice: '夜间/低能见度作业必须开启黄蓝相间警示频闪灯（可视距离≥150m，相邻警示灯间距≤交通锥间距3倍即过渡/工作区≤12m）并布设背对非封闭车道的工作区照明。'
   },
   {
     id: 'R-16',
@@ -1636,9 +1841,9 @@ const RULES = [
     id: 'R-17',
     level: 'info',
     cond: (ctx) => ctx.input.pos !== 'ramp' && ctx.input.lanes >= 4,
-    title: '双向八车道及以上路段：非封闭侧应同步增设施工与限速标志',
-    clause: 'JTG H30-2015 6.1.2',
-    advice: '单向4车道以上断面较宽，仅在封闭侧设牌易被大型货车遮挡视线，须在另一侧路侧对称增设标志。'
+    title: '双向八车道及以上路段：非封闭侧必须同步增设施工与逐级限速标志',
+    clause: 'JTG H30-2015 6.1.2(1)',
+    advice: '单向4车道以上断面较宽，仅在封闭侧设牌易被大型货车遮挡视线，须按 6.1.2(1) 在非封闭侧对称增设施工标志、黄蓝警示频闪灯及全套限速标志。'
   },
   {
     id: 'R-18',
@@ -1651,18 +1856,18 @@ const RULES = [
   {
     id: 'R-19',
     level: 'info',
-    cond: (ctx) => ctx.type === '临时' && ctx.nature === 'fixed' && !ctx.input.hasSignVehicle && !ctx.tma.need,
-    title: '临时养护作业未配置移动式标志车',
+    cond: (ctx) => ctx.type === '临时' && ctx.nature === 'fixed',
+    title: '临时养护作业：按 6.2.5 可采用单一限速控制或标志车简捷布置',
     clause: 'JTG H30-2015 6.2.5',
-    advice: '临时作业宜在封闭车道上游配置移动式标志车（或防撞缓冲车），按规定配置后可简化/免设上游过渡区。'
+    advice: '临时作业（≤4h）规范允许在警告区采用单一目标限速控制；当封闭车道上游已按规定布设移动式标志车或防撞缓冲车时，可简化/免设上游过渡区。'
   },
   {
     id: 'R-20',
     level: 'info',
-    cond: (ctx) => ctx.input.pos === 'ramp' && ctx.input.hasFixedFacility && !ctx.input.poorSight,
+    cond: (ctx) => ctx.input.pos === 'ramp' && ctx.input.hasFixedFacility && !ctx.input.poorSight && ctx.input.slope !== 'gt3',
     title: '匝道已设稳固式安全设施：防撞缓冲车按第十三条判定为“可不设”',
-    clause: '越交〔2025〕110号 第十三条',
-    advice: '若现场核查存在视距不良、急弯、陡坡或高落差等不利因素，请勾选“视距不良/急弯/陡坡”并强制增配防撞车。'
+    clause: '越交〔2025〕110号 第十三 / 十四条',
+    advice: '仅限无视距不良、急弯、陡坡（纵坡>3%已强制禁用豁免）的平稳工况，且布设与撤除阶段仍须防护；改装自带合格防撞垫作业车按第十四条视同配置。'
   },
   {
     id: 'R-21',
@@ -1672,14 +1877,28 @@ const RULES = [
     clause: '越交〔2025〕110号 第十八条',
     advice: '防撞缓冲车已具备导向标志警示功能，可替代移动式标志车（但严禁以移动式标志车替代防撞缓冲车）。'
   },
-  // 补充提示：边界条款 (§1.3 桥梁隧道 / §5.1 0交通量 / §5.1 路肩越界 / §6.2 <=0.5h)
+  // 补充提示：边界条款 (第9章桥梁 / 第10章隧道 / 6.2.3借道 / 6.2.6短时 / 参数校验)
   {
     id: 'S-01',
     level: 'amber',
     cond: (ctx) => ctx.input.inBridge || ctx.input.inTunnel,
-    title: (ctx) => `涉及${ctx.input.inBridge ? '桥梁' : ''}${ctx.input.inBridge && ctx.input.inTunnel ? '与' : ''}${ctx.input.inTunnel ? '隧道' : ''}路段（V1.0 边界提示）`,
+    title: (ctx) => {
+      const tags = [];
+      if (ctx.input.inBridge) tags.push('桥梁（9.2.2/9.2.3）');
+      if (ctx.input.inTunnel) tags.push('隧道（4.0.3/10.1.3/10.2.4）');
+      return `涉及${tags.join('与')}专项控制区要求`;
+    },
     clause: 'JTG H30-2015 第9章 / 第10章',
-    advice: '桥隧控制区受限于护栏/洞口视距/洞内照明，本系统仅输出基础基准，须按规范第9/10章专项调整并开展结构/通风论证。'
+    advice: (ctx) => {
+      const notes = [];
+      if (ctx.input.inBridge) {
+        notes.push('桥梁：特大/大桥作业区距桥头<300m时纵向缓冲区起点宜提前至桥头（9.2.2），并须设重车靠右行驶与靠右停靠区（9.1.3/9.2.3）');
+      }
+      if (ctx.input.inTunnel) {
+        notes.push('隧道：本方案已自动将隧道限速下调10km/h（4.0.3(6)，最低20km/h）并将交通锥全域加密至≤4m（10.1.3）；上游过渡区须设于隧道入口前（10.2.4），交通引导员连续工作≤4h轮换（10.1.6）');
+      }
+      return notes.join('；') + '。';
+    }
   },
   {
     id: 'S-02',
@@ -1704,6 +1923,14 @@ const RULES = [
     title: '高峰小时交通量输入为 0，警告区按最低交通量档（Q≤1400）计算',
     clause: 'JTG H30-2015 表 4.0.4-1',
     advice: '正式方案交底前建议补充路段观测小时交通量以准确校核警告区长度。'
+  },
+  {
+    id: 'S-05',
+    level: 'amber',
+    cond: (ctx) => ctx.nature === 'fixed' && ctx.input.borrowOpposite,
+    title: '借用对向车道通行：须配套中分带开口渠化与前置绕行标志',
+    clause: 'JTG H30-2015 4.0.7(2) / 6.2.3',
+    advice: '中分带开口连接车道应布设渠化设施分隔对向车流，前一出口处增设大车辆绕行标志；当开口间距＞3km时，工作区长度G宜取一个开口间距（≤6km）。'
   }
 ];
 
@@ -1723,6 +1950,33 @@ if (typeof module !== 'undefined') {
 (function (global) {
   function roundUp10(val) {
     return Math.ceil(val / 10) * 10;
+  }
+
+  function formatStakeNo(totalMeters, prefix = 'K') {
+    if (!Number.isFinite(totalMeters)) return '';
+    const p = prefix || 'K';
+    if (totalMeters < 0) return `${p}0-${Math.round(Math.abs(totalMeters))}m`;
+    const m = Math.round(totalMeters);
+    const km = Math.floor(m / 1000);
+    const rem = m % 1000;
+    return `${p}${km}+${String(rem).padStart(3, '0')}`;
+  }
+
+  function parseStakeNo(str) {
+    const raw = String(str ?? '').trim();
+    if (!raw) return null;
+    // 优先匹配标准带 + 的桩号格式（如 K125+300、ZK38+200、125+300），再匹配 K125 格式，避免误抓 G4 等高速编号
+    let m = raw.match(/([A-Za-z]{0,3})\s*(\d{1,5})\+(\d{1,4}(?:\.\d+)?)/);
+    if (!m) {
+      m = raw.match(/([KZYABCDkzyabcd]{1,2})\s*(\d{1,5})\b/);
+    }
+    if (!m) return null;
+    const prefix = (m[1] || 'K').toUpperCase();
+    const km = Number(m[2]);
+    const rem = m[3] !== undefined ? Number(m[3]) : 0;
+    if (!Number.isFinite(km) || !Number.isFinite(rem)) return null;
+    const meters = Math.round(km * 1000 + rem);
+    return { prefix, km, rem, meters, formatted: formatStakeNo(meters, prefix) };
   }
 
   function clamp(val, min, max) {
@@ -1751,6 +2005,8 @@ if (typeof module !== 'undefined') {
     return {
       projectName: String(d.projectName ?? 'G4京港澳高速 K125+300 路段监控维护').slice(0, 40),
       stakeNo: String(d.stakeNo ?? 'K125+300').slice(0, 24),
+      stakeDirection: d.stakeDirection === 'down' ? 'down' : 'up',
+      stakeAnchor: d.stakeAnchor === 'warning' ? 'warning' : 'work',
       workContent: String(d.workContent ?? '外侧路侧监控杆件及供配电箱检修').slice(0, 40),
       company: String(d.company ?? '机电运维一分部').slice(0, 20),
       date: d.date || today,
@@ -1897,6 +2153,15 @@ if (typeof module !== 'undefined') {
       widthDowngraded = true;
       vfMod.push(`剩余单车道宽 ${remLaneWidth.toFixed(2)}m < ${reqLaneWidth.toFixed(2)}m，降档 -10km/h`);
     }
+    if (input.inTunnel) {
+      const vfTunnel = Math.max(20, Vf - 10);
+      if (vfTunnel < Vf) {
+        Vf = vfTunnel;
+        vfMod.push('隧道养护按4.0.3(6)可降10~20km/h（默认降10km/h，下限20）');
+      } else {
+        vfMod.push('隧道养护限速已达最低限 20km/h（4.0.3(6)）');
+      }
+    }
     trace.Vf = {
       value: Vf,
       table: '表4.0.3',
@@ -2031,12 +2296,14 @@ if (typeof module !== 'undefined') {
       }
     }
 
-    // ⑧ 锥桶分区数量 (§6.10)
+    // ⑧ 锥桶分区数量 (§6.10；JTG H30-2015 10.1.3 隧道内交通锥间距不宜大于 4m)
     const dens = input.coneDensity;
     const spTaper = Number((C.coneSpaceTaper / dens).toFixed(2));
-    const spBuffer = Number((C.coneSpaceBuffer / dens).toFixed(2));
+    const baseBufferSpace = input.inTunnel ? Math.min(C.coneSpaceBuffer, C.coneSpaceTaper) : C.coneSpaceBuffer;
+    const baseDownSpace = input.inTunnel ? Math.min(C.coneSpaceDown, C.coneSpaceTaper) : C.coneSpaceDown;
+    const spBuffer = Number((baseBufferSpace / dens).toFixed(2));
     const spWork = Number((C.coneSpaceWork / dens).toFixed(2));
-    const spDown = Number((C.coneSpaceDown / dens).toFixed(2));
+    const spDown = Number((baseDownSpace / dens).toFixed(2));
     const segs = input.nature === 'mobile' ? [] : [
       { key: 'Ls', name: '上游过渡区', len: Ls, sp: spTaper, cnt: Math.ceil(Ls / spTaper) + 1 },
       { key: 'H',  name: '纵向缓冲区', len: H,  sp: spBuffer, cnt: Math.ceil(H / spBuffer) + 1 },
@@ -2046,16 +2313,18 @@ if (typeof module !== 'undefined') {
     const coneTotal = segs.reduce((acc, s) => acc + s.cnt, 0);
     const coneTotalSpare = Math.ceil(coneTotal * 1.1);
 
-    // ⑨ 防撞缓冲车判定与停放位置计算 (§7)
+    // ⑨ 防撞缓冲车判定与停放位置计算 (越交〔2025〕110号 第11/13/14/20/29/30条)
     let tmaNeed = true;
-    let tmaReason = '高速公路定点/移动养护作业须配置（第十一条）';
-    if (input.pos === 'ramp' && input.hasFixedFacility && !input.poorSight) {
+    let tmaReason = '高速公路定点/移动养护作业须配置（第十一条；改装自带合格缓冲垫车视同配置，第十四条）';
+    if (input.pos === 'ramp' && input.hasFixedFacility && !input.poorSight && input.slope !== 'gt3') {
       tmaNeed = false;
-      tmaReason = '匝道已设稳固式安全设施且无视距不良/急弯/陡坡，按第十三条可不设';
+      tmaReason = '匝道已设稳固式安全设施且无视距不良/急弯/陡坡，按第十三条可不设（布设及撤除阶段仍须防护）';
     }
+    const isMainTravelLane = input.nature === 'fixed' && input.pos !== 'ramp' && input.pos !== 'shoulder';
     const tmaLevel = Math.max(Vf, C.tmaMinLevel);
     const tmaCount = tmaNeed ? ((G > 1000 || input.borrowOpposite) ? 2 : 1) : 0;
-    const isHighSpeedTma = tmaLevel >= 70;
+    // 第二十九条：控制区限速 70km/h 及以上净空 50~100m；70km/h 以下不低于 10m（应按限速 Vf 判定）
+    const isHighSpeedTma = Vf >= 70;
     const dmin = isHighSpeedTma ? C.tmaMinDist : C.tmaLowSpeedMinDist;
     const dmax = isHighSpeedTma ? C.tmaMaxDist : 9999;
     const dIdeal = input.nature === 'mobile' ? 0 : clamp(H, dmin, dmax);
@@ -2095,7 +2364,7 @@ if (typeof module !== 'undefined') {
       table: '越交〔2025〕110号',
       clause: tmaNeed ? '11/20/29/30条' : '第13条',
       formula: tmaNeed
-        ? `碰撞等级 ≥ max(${Vf}, 70) = ${tmaLevel}K；纵向净空范围 [${dmin}, ${dmax === 9999 ? '∞' : dmax}]m`
+        ? `${isMainTravelLane ? '主线行车道' : '作业车'}碰撞等级 ≥ max(Vf=${Vf}, 70) = ${tmaLevel}K（路肩/匝道/移动按实选配，第20条）；限速 ${Vf}${isHighSpeedTma ? '≥70' : '<70'}km/h 纵向净空 [${dmin}, ${dmax === 9999 ? '∞' : dmax}]m`
         : tmaReason,
       mod: (tmaNeed && xFromBuffer > 0) ? `因缓冲区 H=${H}m > ${dmax}m，防撞车须前移 ${xFromBuffer}m（距工作区 ${dIdeal}m）` : ''
     };
@@ -2218,10 +2487,16 @@ if (typeof module !== 'undefined') {
         at: S,
         atLabel: `${S} m`,
         item: `上游过渡区起点 · ${divertLabel}`,
-        detail: `设${divertLabel}及移动/闪光箭头，沿渐变段 ${Ls}m 布设 ${linearGuideCnt} 处线形诱导标 + ${segs[0].cnt} 个交通锥（≤${spTaper}m）`,
+        detail: `设${divertLabel}及移动/闪光箭头（表A-3-10），沿渐变段 ${Ls}m 布设 ${linearGuideCnt} 处线形诱导标 + ${segs[0].cnt} 个交通锥（≤${spTaper}m）${input.inTunnel ? '；隧道作业须设于洞口入口前(10.2.4)' : ''}`,
         clause: 'JTG H30-2015 4.0.5 / 5.0.2 / 5.0.4'
       });
-      coords.push({ at: S + Ls, atLabel: `${S + Ls} m`, item: '纵向缓冲区起点', detail: `缓冲区长 ${H}m，锥距 ≤${spBuffer}m，共 ${segs[1].cnt} 个`, clause: '4.0.6' });
+      coords.push({
+        at: S + Ls,
+        atLabel: `${S + Ls} m`,
+        item: `纵向缓冲区起点 · 施工长度牌(${H + G}m)`,
+        detail: `设施工长度标志（${H + G}m，表A-1-3），缓冲区长 ${H}m，锥距 ≤${spBuffer}m，共 ${segs[1].cnt} 个${input.inBridge ? '；距特大/大桥桥头<300m时起点提前至桥头(9.2.2)' : ''}`,
+        clause: 'JTG H30-2015 4.0.6 / 5.0.2'
+      });
       if (tma.need) {
         coords.push({
           at: atFromStart,
@@ -2233,11 +2508,23 @@ if (typeof module !== 'undefined') {
           clause: '越交110号 29/30条'
         });
       }
-      coords.push({ at: S + Ls + H, atLabel: `${S + Ls + H} m`, item: '工作区起点（设路栏）', detail: `入口设施工路栏阻隔来车；工作区长 ${G}m，锥距 ≤${spWork}m，共 ${segs[2].cnt} 个（Hh≤0.5m）`, clause: 'JTG H30-2015 4.0.7 / 5.0.4' });
+      coords.push({
+        at: S + Ls + H,
+        atLabel: `${S + Ls + H} m`,
+        item: '工作区起点（设黄黑警示路栏）',
+        detail: `入口设黄黑相间带3灯施工路栏（5.0.5）；工作区长 ${G}m，锥距 ≤${spWork}m，共 ${segs[2].cnt} 个（Hh≤0.5m）`,
+        clause: 'JTG H30-2015 4.0.7 / 5.0.4 / 5.0.5'
+      });
       if (tma.need && tma.count === 2) {
         coords.push({ at: S + Ls + H + G, atLabel: `${S + Ls + H + G} m`, item: '第 2 台防撞缓冲车（下游防护）', detail: 'G>1000m或借道作业下游端防护', clause: '越交110号 29条' });
       }
-      coords.push({ at: S + Ls + H + G, atLabel: `${S + Ls + H + G} m`, item: '工作区终点 / 下游过渡区起点', detail: `下游渐变长 ${Lx}m，锥距 ≤${spDown}m，共 ${segs[3].cnt} 个`, clause: '4.0.8' });
+      coords.push({
+        at: S + Ls + H + G,
+        atLabel: `${S + Ls + H + G} m`,
+        item: '工作区终点 / 下游过渡区起点',
+        detail: `工程车辆宜由顺行方向下游过渡区进出封闭区（6.1.5，须引导员指挥）；下游渐变长 ${Lx}m，锥距 ≤${spDown}m，共 ${segs[3].cnt} 个`,
+        clause: 'JTG H30-2015 4.0.8 / 6.1.5'
+      });
       coords.push({ at: S + Ls + H + G + Lx, atLabel: `${S + Ls + H + G + Lx} m`, item: '终止区起点', detail: `终止区长 ${Z}m`, clause: '4.0.9' });
       coords.push({
         at: totalLen,
@@ -2252,16 +2539,62 @@ if (typeof module !== 'undefined') {
       coords.push({ at: 2, atLabel: '队首 (下游)', item: '移动养护作业车', detail: `${input.mobileState === 'stop' ? '停下作业状态' : '慢驶作业状态'}`, clause: '越交110号 表1' });
     }
 
+    // 上下行绝对桩号自动换算（默认按输入桩号为工作区起点，支持切换警告区起点及上行递增/下行递减）
+    const parsedStake = parseStakeNo(input.stakeNo);
+    const dirSign = input.stakeDirection === 'down' ? -1 : 1;
+    const dirLabel = input.stakeDirection === 'down' ? '下行（桩号递减 K-）' : '上行（桩号递增 K+）';
+    const anchorOffset = (input.nature === 'fixed' && input.stakeAnchor === 'work') ? (S + Ls + H) : 0;
+    const offsetToStake = (atMeters) => {
+      if (!parsedStake || input.nature !== 'fixed') return '';
+      return formatStakeNo(parsedStake.meters + dirSign * (atMeters - anchorOffset), parsedStake.prefix);
+    };
+    const stakeMeta = {
+      enabled: Boolean(parsedStake && input.nature === 'fixed'),
+      direction: input.stakeDirection,
+      dirLabel,
+      anchor: input.stakeAnchor,
+      anchorLabel: input.stakeAnchor === 'warning' ? '警告区起点(0m)' : '工作区起点(施工点)',
+      baseStake: parsedStake ? parsedStake.formatted : '',
+      warningStartStake: offsetToStake(0),
+      taperStartStake: offsetToStake(S),
+      workStartStake: offsetToStake(S + Ls + H),
+      workEndStake: offsetToStake(S + Ls + H + G),
+      zoneEndStake: offsetToStake(totalLen),
+      workRangeText: parsedStake && input.nature === 'fixed'
+        ? `${offsetToStake(S + Ls + H)} ~ ${offsetToStake(S + Ls + H + G)}`
+        : '',
+      fullRangeText: parsedStake && input.nature === 'fixed'
+        ? `${offsetToStake(0)} ~ ${offsetToStake(totalLen)}`
+        : ''
+    };
+    if (stakeMeta.enabled) {
+      coords.forEach(c => {
+        c.stakeLabel = offsetToStake(c.at);
+      });
+    }
+
     // 设施用量清单
     const facilities = [];
+    let totalSignBoards = 0;
+    let workSignCnt = 0;
+    let sideFactor = 1;
+    const strobeCnt = (input.night || input.hasStrobe)
+      ? (input.nature === 'fixed' ? Math.max(4, Math.ceil((Ls + G) / 12)) : 0)
+      : 0;
     if (input.nature === 'fixed') {
       const coneDesc = segs.map(s => `${s.name}${s.cnt}`).join('+');
       const coneCountStr = input.coneSpare
         ? `${coneTotal} 个（含10%备损共 ${coneTotalSpare} 个）`
         : `${coneTotal} 个`;
-      facilities.push({ name: '交通锥', qty: coneCountStr, spec: `分区明细：${coneDesc}`, clause: '5.0.2 / 5.0.3' });
-      const sideFactor = dualSide ? 2 : 1;
-      const workSignCnt = (dualSide || medianWorkWarn) ? 2 : 1;
+      facilities.push({ name: '交通锥', qty: coneCountStr, spec: `分区明细：${coneDesc}${input.inTunnel ? '（隧道全域≤4m）' : ''}`, clause: input.inTunnel ? '5.0.2 / 10.1.3' : '5.0.2 / 5.0.3' });
+      sideFactor = dualSide ? 2 : 1;
+      workSignCnt = (dualSide || medianWorkWarn) ? 2 : 1;
+      totalSignBoards = workSignCnt
+        + signs.length * sideFactor
+        + (hasNoOvertake ? 2 * sideFactor : 0)
+        + (hasLaneReduce ? sideFactor : 0)
+        + sideFactor
+        + sideFactor;
       facilities.push({
         name: '施工标志（含距离牌）',
         qty: `${workSignCnt} 套`,
@@ -2283,7 +2616,7 @@ if (typeof module !== 'undefined') {
         facilities.push({ name: `车道数变少标志`, qty: `${sideFactor} 块`, spec: `${laneReduceSide}，${sideDescShort}`, clause: 'GB 5768.4 / 5.0.2' });
       }
       facilities.push({ name: '改道标志及线形诱导标', qty: `改道 ${sideFactor} 块 + 诱导标 ${linearGuideCnt} 处`, spec: `${divertLabel}（${sideDescShort}）`, clause: '5.0.2 / 5.0.4' });
-      facilities.push({ name: '施工路栏', qty: '1~2 组', spec: '设于工作区上游入口横断面', clause: '5.0.4' });
+      facilities.push({ name: '施工路栏', qty: '1~2 组', spec: '黄黑相间附设3盏黄色警示灯，设于工作区上游入口横断面', clause: '5.0.5(5) / 表A-3-6' });
       facilities.push({ name: '解除限速/结束标志', qty: `${sideFactor} 套`, spec: `终止区末端（${sideDescShort}）`, clause: '4.0.9 / GB 5768.4' });
     }
     if (tma.need) {
@@ -2298,7 +2631,7 @@ if (typeof module !== 'undefined') {
       facilities.push({ name: '刚性防护设施', qty: '按工作区前段配足', spec: '下坡路段缓冲区末端/工作区前防撞护栏', clause: '5.0.5' });
     }
     if (input.night || input.hasStrobe) {
-      facilities.push({ name: '警示频闪灯', qty: input.nature === 'fixed' ? `${Math.max(4, Math.ceil((Ls + G) / 40))} 盏` : '车载全开', spec: '过渡区及工作区边界加密布设', clause: '3.0.12' });
+      facilities.push({ name: '警示频闪灯', qty: input.nature === 'fixed' ? `${Math.max(4, Math.ceil((Ls + G) / 12))} 盏` : '车载全开', spec: '黄蓝相间（可视≥150m）；夜间/低能见度灯距≤3倍锥距（≤12m）', clause: '5.0.7 / 14.0.7(2)' });
     }
     if (input.night || input.hasLighting) {
       facilities.push({ name: '施工照明灯具', qty: '按作业面配置', spec: '架设于工作区侧面，灯头背对非封闭车道', clause: '3.0.12' });
@@ -2340,6 +2673,26 @@ if (typeof module !== 'undefined') {
     const ymd = formatDateYMD(input.date);
     const planCode = input.planCode || `BZ-${ymd}-01`;
     const briefingCode = `${planCode}-JD`;
+
+    // 出门装车备料清点汇总
+    const packingSummary = input.nature === 'mobile'
+      ? [
+          tma.need ? { icon: '🚚', name: '防撞缓冲车', val: `${tma.count} 台`, sub: `碰撞等级 ≥${tma.level}K` } : null,
+          input.hasSignVehicle ? { icon: '🚐', name: '移动标志车', val: '1 台', sub: '车载LED箭头' } : null,
+          { icon: '🦺', name: '引导/跟随', val: input.hasGuide ? '引导员 ≥1人' : '车载声光', sub: `跟随距 ${mobileFollowDist}m` }
+        ].filter(Boolean)
+      : [
+          tma.need
+            ? { icon: '🚚', name: '防撞缓冲车', val: `${tma.count} 台`, sub: `碰撞等级 ≥${tma.level}K` }
+            : { icon: '🚚', name: '防撞缓冲车', val: '可不设', sub: '匝道稳固设施豁免' },
+          { icon: '▲', name: '交通锥', val: `${input.coneSpare ? coneTotalSpare : coneTotal} 个`, sub: input.coneSpare ? `含10%备损(净${coneTotal})` : '按≤4m/≤10m实距' },
+          { icon: '🪧', name: '各类标志牌', val: `${totalSignBoards} 块`, sub: `施工${workSignCnt}+限速${signs.length * sideFactor}+改道/解限等` },
+          { icon: '🚧', name: '路栏/诱导标', val: '路栏 1~2 组', sub: `线形诱导标 ${linearGuideCnt} 处` },
+          strobeCnt > 0
+            ? { icon: '💡', name: '黄蓝频闪灯', val: `${strobeCnt} 盏`, sub: input.hasLighting ? '另配工作区照明' : '边界间距≤12m' }
+            : null,
+          { icon: '🦺', name: '交通引导员', val: input.hasGuide ? '≥1 人' : '未配(警示)', sub: input.hasGuide ? '对讲机+发光指挥棒' : '建议现场增配' }
+        ].filter(Boolean);
 
     // 汇总依据条文清单
     const clauseSet = new Set(['JTG H30-2015 3.0.1 / 4.0.1~4.0.9']);
@@ -2392,6 +2745,8 @@ if (typeof module !== 'undefined') {
       hasRedline,
       zoneRows,
       coords,
+      stakeMeta,
+      packingSummary,
       facilities,
       activeChecklist,
       clausesUsed: Array.from(clauseSet),
@@ -2399,7 +2754,7 @@ if (typeof module !== 'undefined') {
     };
   }
 
-  global.ENGINE = { computePlan, sanitizeInput, roundUp10 };
+  global.ENGINE = { computePlan, sanitizeInput, roundUp10, parseStakeNo, formatStakeNo };
   if (typeof module !== 'undefined') {
     module.exports = global.ENGINE;
   }
@@ -2546,21 +2901,30 @@ if (typeof module !== 'undefined') {
     </g>`;
   }
 
-  // 施工路栏（JTG H30-2015 工作区上游红橙白斜纹阻隔路栏 + 可选顶部施工警示灯）
+  // 施工路栏（JTG H30-2015 5.0.5(5) / 表A-3-6 / 表B-1：黄黑相间带顶部3盏黄色警示灯）
   function drawBarricade(x, y1, y2, hasLight) {
     const h = Math.max(10, y2 - y1);
     const segs = Math.max(3, Math.floor((h - 4) / 7));
     let stripes = '';
     for (let i = 0; i < segs; i++) {
       const sy = y1 + 3 + i * ((h - 6) / segs);
-      stripes += `<line x1="${(x - 2.2).toFixed(1)}" y1="${(sy + 2.5).toFixed(1)}" x2="${(x + 2.2).toFixed(1)}" y2="${sy.toFixed(1)}" stroke="#EA580C" stroke-width="2.2"/>`;
+      stripes += `<line x1="${(x - 2.2).toFixed(1)}" y1="${(sy + 2.5).toFixed(1)}" x2="${(x + 2.2).toFixed(1)}" y2="${sy.toFixed(1)}" stroke="#1E293B" stroke-width="2.2"/>`;
     }
-    const lamp = hasLight
-      ? `<circle cx="${x.toFixed(1)}" cy="${(y1 + 2).toFixed(1)}" r="2.4" fill="#FACC15" stroke="#B45309" stroke-width="0.7"/>`
+    const lamps = hasLight
+      ? [-2.8, 0, 2.8].map(dx => `<circle cx="${(x + dx).toFixed(1)}" cy="${(y1 + 1.5).toFixed(1)}" r="1.5" fill="#FACC15" stroke="#B45309" stroke-width="0.6"/>`).join('')
       : '';
     return `<g>
-      <rect x="${(x - 2.2).toFixed(1)}" y="${(y1 + 2).toFixed(1)}" width="4.4" height="${(h - 4).toFixed(1)}" rx="0.6" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/>
-      ${stripes}${lamp}
+      <rect x="${(x - 2.2).toFixed(1)}" y="${(y1 + 2).toFixed(1)}" width="4.4" height="${(h - 4).toFixed(1)}" rx="0.6" fill="#FACC15" stroke="#1E293B" stroke-width="0.9"/>
+      ${stripes}${lamps}
+    </g>`;
+  }
+
+  // 警示频闪灯（JTG H30-2015 5.0.7 / 表A-3-11：黄蓝相间，可视距离≥150m）
+  function drawStrobeLamp(x, y, r) {
+    const rad = r || 5.2;
+    return `<g>
+      <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${rad.toFixed(1)}" fill="#FACC15" stroke="#1E293B" stroke-width="1"/>
+      <path d="M ${x.toFixed(1)},${(y - rad).toFixed(1)} A ${rad.toFixed(1)},${rad.toFixed(1)} 0 0,1 ${x.toFixed(1)},${(y + rad).toFixed(1)} Z" fill="#2563EB"/>
     </g>`;
   }
 
@@ -2664,7 +3028,8 @@ if (typeof module !== 'undefined') {
     svg += `<rect x="0" y="0" width="${W}" height="${H}" fill="#FFFFFF"/>`;
 
     svg += `<text x="20" y="21" font-size="13" font-weight="700" fill="#0F172A">高速公路移动养护作业车队列队示意图</text>`;
-    svg += `<text x="20" y="38" font-size="9" fill="#475569">${esc(clipText(input.projectName, 30))} · ${esc(posLabel(input.pos))} · ${input.speed}km/h</text>`;
+    const mobDir = input.stakeDirection === 'down' ? '下行(K-)' : '上行(K+)';
+    svg += `<text x="20" y="38" font-size="9" fill="#475569">${esc(clipText(input.projectName, 24))} · ${mobDir} · ${esc(posLabel(input.pos))} · ${input.speed}km/h</text>`;
     svg += `<rect x="456" y="7" width="224" height="40" rx="4" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>`;
     svg += `<text x="464" y="21" font-size="8.2" font-weight="700" fill="#0F172A">编号：${esc(plan.planCode)}</text>`;
     svg += `<text x="464" y="36" font-size="8" fill="#475569">日期：${esc(input.date)} · ${esc(clipText(input.company, 14))}</text>`;
@@ -2845,7 +3210,11 @@ if (typeof module !== 'undefined') {
 
     // ===== Band 1: 标题栏与固定信息栏 =====
     svg += `<text x="20" y="20" font-size="13" font-weight="700" fill="#0F172A">高速公路养护作业控制区平面布置示意图</text>`;
-    svg += `<text x="20" y="36" font-size="8.8" fill="#475569">${esc(clipText(input.projectName, 18))} · ${esc(clipText(input.stakeNo || '', 10))} · ${esc(posLabel(input.pos))}（${esc(plan.type)}）</text>`;
+    const sm = plan.stakeMeta;
+    const subTxt = (sm && sm.enabled)
+      ? `${clipText(input.projectName, 14)} · ${sm.direction === 'down' ? '下行K-' : '上行K+'} · 工作区${sm.workRangeText} · ${posLabel(input.pos)}`
+      : `${clipText(input.projectName, 18)} · ${clipText(input.stakeNo || '', 10)} · ${posLabel(input.pos)}（${plan.type}）`;
+    svg += `<text x="20" y="36" font-size="8.6" fill="#475569">${esc(clipText(subTxt, 45))}</text>`;
 
     svg += `<rect x="448" y="6" width="232" height="40" rx="4" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>`;
     svg += `<text x="456" y="19" font-size="8" font-weight="700" fill="#0F172A">编号：${esc(plan.planCode)}　　控制区总长：${plan.totalLen} m</text>`;
@@ -3133,8 +3502,7 @@ if (typeof module !== 'undefined') {
       svg += renderSignNode(mNode, signY, true);
       if (input.night || input.hasStrobe) {
         const sx = mNode.x + 20;
-        svg += `<circle cx="${sx.toFixed(1)}" cy="${signY}" r="5.5" fill="#FEF08A" stroke="#D97706" stroke-width="1.2"/>`;
-        svg += `<circle cx="${sx.toFixed(1)}" cy="${signY}" r="2.2" fill="#EA580C"/>`;
+        svg += drawStrobeLamp(sx, signY, 5.2);
         svg += `<text x="${sx.toFixed(1)}" y="${(signY + 14.5).toFixed(1)}" text-anchor="middle" font-size="6.4" font-weight="700" fill="#334155">频闪</text>`;
       }
     }
@@ -3199,13 +3567,13 @@ if (typeof module !== 'undefined') {
     svg += `<text x="${drawLeft + 208}" y="${r2y + 3}" font-size="7.2" fill="#334155">防撞缓冲车</text>`;
     svg += `<rect x="${drawLeft + 266}" y="${r2y - 2}" width="16" height="4.5" fill="#FB923C"/>`;
     svg += `<text x="${drawLeft + 286}" y="${r2y + 3}" font-size="7.2" fill="#334155">横向缓冲区Hh≤0.5m</text>`;
-    svg += `<circle cx="${drawLeft + 382}" cy="${r2y}" r="3.2" fill="#FACC15" stroke="#B45309" stroke-width="0.8"/>`;
+    svg += drawStrobeLamp(drawLeft + 382, r2y, 3.6);
     svg += `<text x="${drawLeft + 389}" y="${r2y + 3}" font-size="7.2" fill="#334155">警示频闪灯</text>`;
     svg += `<line x1="${drawLeft + 448}" y1="${r2y}" x2="${drawLeft + 464}" y2="${r2y}" stroke="#2563EB" stroke-width="1.4" stroke-dasharray="3,2"/>`;
     svg += `<polygon points="${drawLeft + 468},${r2y} ${drawLeft + 463},${r2y - 2.4} ${drawLeft + 463},${r2y + 2.4}" fill="#2563EB"/>`;
     svg += `<text x="${drawLeft + 472}" y="${r2y + 3}" font-size="7.2" fill="#334155">车流/并线导流</text>`;
 
-    svg += `<text x="${drawLeft + 10}" y="${legY + 39}" font-size="7.2" font-weight="600" fill="#64748B">注：主标志默认设于硬路肩外侧（多车道及内侧封闭同步双侧设标）；横向示意压缩 w∝L^0.38，尺寸按 JTG H30-2015 / GB 5768.4。</text>`;
+    svg += `<text x="${drawLeft + 10}" y="${legY + 39}" font-size="7.2" font-weight="600" fill="#64748B">注：主标志默认设于硬路肩外侧（八车道及以上双侧同步限速）；路栏黄黑/频闪黄蓝按 JTG H30-2015 / GB 5768.4。</text>`;
 
     svg += `</svg>`;
     return svg;
@@ -3250,8 +3618,8 @@ if (typeof module !== 'undefined') {
           <div class="briefing-left">
             <div class="b-sec-title">① 作业参数</div>
             <table class="b-table">
-              <tr><th>项目/路段</th><td>${esc(input.projectName)}</td><th>桩号</th><td>${esc(input.stakeNo || '—')}</td></tr>
-              <tr><th>作业内容</th><td colspan="3">${esc(input.workContent || '—')}</td></tr>
+              <tr><th>项目/路段</th><td>${esc(input.projectName)}</td><th>方向/桩号</th><td>${esc(plan.stakeMeta && plan.stakeMeta.enabled ? `${plan.stakeMeta.direction === 'down' ? '下行(K-)' : '上行(K+)'} · ${plan.stakeMeta.workRangeText}` : (input.stakeNo || '—'))}</td></tr>
+              <tr><th>作业内容</th><td colspan="3">${esc(input.workContent || '—')}${plan.stakeMeta && plan.stakeMeta.enabled ? `（控制区全段 ${esc(plan.stakeMeta.fullRangeText)}）` : ''}</td></tr>
               <tr><th>作业单位</th><td>${esc(input.company)}</td><th>作业类型</th><td>${esc(plan.type)}${plan.typeOverridden ? '(人工覆盖)' : ''}</td></tr>
               <tr><th>作业位置</th><td>${esc(posLabel(input.pos))}</td><th>车道/交通量</th><td>单向${plan.effectiveLanes}道 / ${input.volume} pcu/h</td></tr>
               <tr><th>设计/限速</th><td>${input.speed} → <strong>${plan.Vf}</strong> km/h</td><th>纵坡/时长</th><td>${input.slope === 'gt3' ? '>3%(陡坡)' : '≤3%'} / ${input.duration}h</td></tr>
@@ -3323,12 +3691,16 @@ if (typeof module !== 'undefined') {
     tables: 'hw_ctrl_tables_v1',
     checklist: 'hw_ctrl_checklist_v1',
     notes: 'hw_ctrl_checknotes_v1',
-    dailySeq: 'hw_ctrl_seq_v1'
+    dailySeq: 'hw_ctrl_seq_v1',
+    uiMode: 'hw_ctrl_uimode_v1',
+    prefs: 'hw_ctrl_prefs_v1'
   };
 
   let state = {
     input: Object.assign({}, SCENARIO_TEMPLATES[0].patch, {
       date: new Date().toISOString().slice(0, 10),
+      stakeDirection: 'up',
+      stakeAnchor: 'work',
       signStrategy: 'A',
       lsTrack: 'A',
       rampLength: 300,
@@ -3348,6 +3720,7 @@ if (typeof module !== 'undefined') {
     prevCheckIds: [],
     activeTplId: SCENARIO_TEMPLATES[0].id,
     activeTab: 'tab-blueprint',
+    uiMode: 'simple',
     plan: null
   };
 
@@ -3422,7 +3795,80 @@ if (typeof module !== 'undefined') {
     document.querySelectorAll('#tpl-grid [data-tpl]').forEach(btn => {
       btn.classList.toggle('active-tpl', btn.getAttribute('data-tpl') === state.activeTplId);
     });
+    updateModeIndicators();
     updateConditionalFields();
+  }
+
+  function updateModeIndicators() {
+    const inp = state.input;
+    const durVal = Number(inp.duration) || 6;
+    const activeDurBucket = durVal <= 4 ? '2' : durVal <= 24 ? '6' : '48';
+    document.querySelectorAll('[data-quick-duration]').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-quick-duration') === activeDurBucket);
+    });
+
+    const typeBadge = document.getElementById('simple-type-badge');
+    if (typeBadge) {
+      const autoType = durVal <= 4 ? '临时' : durVal <= 24 ? '短期' : '长期';
+      const isOver = inp.typeOverride && inp.typeOverride !== 'auto';
+      typeBadge.textContent = isOver ? `${inp.typeOverride}(指定) · ${durVal}h` : `${autoType} · ${durVal}h`;
+    }
+
+    const volNote = document.getElementById('simple-vol-note');
+    if (volNote) {
+      const v = Number(inp.volume) || 0;
+      const presetMap = { 600: '畅通车流', 1200: '常规车流', 1800: '繁忙车流' };
+      volNote.classList.remove('is-warn', 'is-danger');
+      if (presetMap[v]) {
+        volNote.textContent = `当前：${presetMap[v]}（${v} pcu/h）`;
+      } else if (v > 1800) {
+        volNote.classList.add('is-danger');
+        volNote.textContent = `自定义 ${v} pcu/h（超单车道上限，请重选档位或切专业精调）`;
+      } else {
+        volNote.classList.add('is-warn');
+        volNote.textContent = `自定义 ${v} pcu/h（点击上方档位或切专业精调修改）`;
+      }
+    }
+
+    const proBadge = document.getElementById('pro-active-badge');
+    if (proBadge) {
+      let proCount = 0;
+      if (Number(inp.laneWidth) !== 3.75) proCount++;
+      if (Number(inp.shoulderWidth) !== 3.0) proCount++;
+      if (inp.typeOverride && inp.typeOverride !== 'auto') proCount++;
+      if (inp.signStrategy && inp.signStrategy !== 'A') proCount++;
+      if (inp.hasSignVehicle) proCount++;
+      if (inp.borrowOpposite) proCount++;
+      if (inp.inBridge) proCount++;
+      if (inp.inTunnel) proCount++;
+      if (Number(inp.adjDistance) > 0) proCount++;
+      if (inp.remWidthOverride !== '' && inp.remWidthOverride !== null && inp.remWidthOverride !== undefined) proCount++;
+      if (Number(inp.coneDensity) !== 1) proCount++;
+      if (inp.coneSpare) proCount++;
+      if (![600, 1200, 1800].includes(Number(inp.volume))) proCount++;
+      proBadge.style.display = proCount > 0 ? 'inline-flex' : 'none';
+      proBadge.textContent = proCount > 0 ? String(proCount) : '';
+    }
+  }
+
+  function setUiMode(mode, silent) {
+    const next = mode === 'pro' ? 'pro' : 'simple';
+    state.uiMode = next;
+    saveJson(LS_KEYS.uiMode, next);
+    const sb = document.getElementById('sidebar');
+    if (sb) sb.classList.toggle('simple-mode', next === 'simple');
+    document.querySelectorAll('#sidebar-mode-tabs .mode-tab').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-ui-mode') === next);
+    });
+    if (next === 'pro' && !silent) {
+      const adv = document.querySelectorAll('#sidebar [data-collapsible="adv"]');
+      adv.forEach(g => g.classList.remove('collapsed'));
+      const tg = document.getElementById('btn-sidebar-toggle-all');
+      if (tg) tg.textContent = '仅看常用';
+    }
+    if (!silent) {
+      showToast(next === 'pro' ? '已切换至【专业精调】全部工程参数已展开' : '已切换至【极简出图】仅保留高频核心参数');
+    }
   }
 
   function readInputFromForm() {
@@ -3530,6 +3976,41 @@ if (typeof module !== 'undefined') {
       });
     });
 
+    // 出门装车备料清点卡 (建议三)
+    const packingGrid = document.getElementById('packing-grid');
+    if (packingGrid && plan.packingSummary) {
+      packingGrid.innerHTML = plan.packingSummary.map(item => `
+        <div class="packing-item">
+          <div class="packing-item-head"><span>${escHtml(item.icon)}</span><span>${escHtml(item.name)}</span></div>
+          <div class="packing-item-val">${escHtml(item.val)}</div>
+          <div class="packing-item-sub">${escHtml(item.sub)}</div>
+        </div>
+      `).join('');
+    }
+
+    // 侧边栏桩号锚点预览 & 坐标表上下行换算横条
+    const sm = plan.stakeMeta;
+    const anchorPrev = document.getElementById('stake-anchor-preview');
+    if (anchorPrev) {
+      if (sm && sm.enabled) {
+        anchorPrev.textContent = `${sm.direction === 'down' ? '下行递减' : '上行递增'}｜工作区 ${sm.workRangeText}`;
+      } else {
+        anchorPrev.textContent = plan.nature === 'mobile' ? '移动作业按车队跟随距放样' : '填桩号如 K125+300 可自动换算全线桩号';
+      }
+    }
+    const stakeBar = document.getElementById('stake-summary-bar');
+    if (stakeBar) {
+      if (sm && sm.enabled) {
+        stakeBar.style.display = 'flex';
+        stakeBar.innerHTML = `
+          <span>🧭 <strong>${escHtml(sm.dirLabel)}</strong>｜基准 <strong>${escHtml(sm.baseStake)}</strong>（${escHtml(sm.anchorLabel)}）➔ 警告区起点 <strong>${escHtml(sm.warningStartStake)}</strong> ～ 工作区 <strong>${escHtml(sm.workRangeText)}</strong> ～ 终点 <strong>${escHtml(sm.zoneEndStake)}</strong></span>
+          <span style="color:#64748b;">长短链路段请按实地百米桩微调</span>
+        `;
+      } else {
+        stakeBar.style.display = 'none';
+      }
+    }
+
     // 区段长度表
     const zoneBody = document.getElementById('zone-table-body');
     zoneBody.innerHTML = plan.zoneRows.map(r => `
@@ -3584,7 +4065,7 @@ if (typeof module !== 'undefined') {
 
     document.getElementById('coords-table-body').innerHTML = plan.coords.map(c => `
       <tr>
-        <td><strong>${escHtml(c.atLabel)}</strong></td>
+        <td>${c.stakeLabel ? `<span class="stake-badge">${escHtml(c.stakeLabel)}</span><span class="coords-rel">${escHtml(c.atLabel)}</span>` : `<strong>${escHtml(c.atLabel)}</strong>`}</td>
         <td>${escHtml(c.item)}</td>
         <td>${escHtml(c.detail)}</td>
         <td><span class="badge badge-clause">${escHtml(c.clause)}</span></td>
@@ -3680,10 +4161,23 @@ if (typeof module !== 'undefined') {
     showToast('已按规范推荐方案一键修正');
   }
 
+  function saveUserPrefs() {
+    saveJson(LS_KEYS.prefs, {
+      projectName: state.input.projectName,
+      company: state.input.company,
+      stakeNo: state.input.stakeNo,
+      stakeDirection: state.input.stakeDirection,
+      stakeAnchor: state.input.stakeAnchor
+    });
+  }
+
   function resetToDefault() {
     state.activeTplId = SCENARIO_TEMPLATES[0].id;
+    try { localStorage.removeItem(LS_KEYS.prefs); } catch (_) {}
     state.input = Object.assign({}, SCENARIO_TEMPLATES[0].patch, {
       date: new Date().toISOString().slice(0, 10),
+      stakeDirection: 'up',
+      stakeAnchor: 'work',
       signStrategy: 'A',
       lsTrack: 'A',
       rampLength: 300,
@@ -3705,31 +4199,34 @@ if (typeof module !== 'undefined') {
   function buildFieldBriefText(plan) {
     if (!plan) return '';
     const p = plan.input;
-    const head = `【现场放样口令｜${p.projectName || '未命名路段'}】`;
+    const sm = plan.stakeMeta;
+    const dirSuffix = p.stakeDirection === 'down' ? '下行(K-)' : '上行(K+)';
+    const head = `【现场放样口令｜${p.projectName || '未命名路段'} · ${dirSuffix}】`;
     if (plan.nature === 'mobile') {
       return `${head}\n模式：移动作业｜防撞车 ≥${plan.tma.level}K｜跟随距离 ${plan.tma.mobileFollowDist}m（${p.mobileState === 'stop' ? '停下' : '慢驶'}）\n铁律：防撞垫全程防护，禁在行车道打开/收起。`;
     }
     const segBrief = (plan.segs || []).map(s => `${s.key}≤${s.sp}m(${s.cnt}个)`).join(' / ');
+    const packTxt = (plan.packingSummary || []).map(x => `${x.name}${x.val}`).join(' · ');
     const lines = [
       head,
+      sm && sm.enabled ? `桩号区间：警告区起点 ${sm.warningStartStake} ～ 工作区 ${sm.workRangeText} ～ 终点 ${sm.zoneEndStake}` : '',
+      packTxt ? `装车备料：${packTxt}` : '',
       `总长：${plan.totalLen}m（S=${plan.S} / Ls=${plan.Ls} / H=${plan.H} / G=${plan.G} / Lx=${plan.Lx} / Z=${plan.Z}）｜Vf=${plan.Vf}km/h`,
       `标志布设：${plan.signsSpec.sideDescShort}`,
-      ...plan.coords.map((c, idx) => `${idx + 1}. [${c.atLabel}] ${c.item}`),
+      ...plan.coords.map((c, idx) => `${idx + 1}. [${c.stakeLabel ? `${c.stakeLabel} | ` : ''}${c.atLabel}] ${c.item}`),
       `锥桶：合计 ${plan.coneTotal} 个${p.coneSpare ? `（含10%备损共 ${plan.coneTotalSpare} 个）` : ''}${segBrief ? `［${segBrief}］` : ''}`,
       plan.tma.need
         ? `防撞车：${plan.tma.count}台 ≥${plan.tma.level}K，距工作区 ${plan.tma.d}m${plan.tma.xFromBuffer > 0 ? `(相对缓冲区前移${plan.tma.xFromBuffer}m)` : ''}，横向净空 ≥0.5m`
         : '防撞车：匝道已设稳固设施可不设'
-    ];
+    ].filter(Boolean);
     if (p.night || p.hasStrobe || p.hasLighting) {
       lines.push('夜视防护：照明灯头背对通行车道，工作区及过渡区频闪警示灯全开。');
     }
     return lines.join('\n');
   }
 
-  function copyFieldScript() {
-    const txt = buildFieldBriefText(state.plan);
+  function copyTextWithFallback(txt, okMsg) {
     if (!txt) return;
-    const okMsg = '已复制现场放样口令，可直接粘贴发送微信群/对讲机';
     try {
       if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(txt).then(() => showToast(okMsg)).catch(() => fallbackCopyText(txt, okMsg));
@@ -3737,6 +4234,19 @@ if (typeof module !== 'undefined') {
       }
     } catch (_) {}
     fallbackCopyText(txt, okMsg);
+  }
+
+  function copyFieldScript() {
+    copyTextWithFallback(buildFieldBriefText(state.plan), '已复制现场放样口令，可直接粘贴发送微信群/对讲机');
+  }
+
+  function copyPackingText() {
+    const plan = state.plan;
+    if (!plan || !plan.packingSummary) return;
+    const p = plan.input;
+    const items = plan.packingSummary.map(x => `${x.icon}${x.name}：${x.val}(${x.sub})`).join('；');
+    const txt = `【出门装车清点｜${p.projectName || '未命名路段'}】${items}`;
+    copyTextWithFallback(txt, '已复制出门装车备料清单');
   }
 
   function fallbackCopyText(txt, okMsg) {
@@ -4032,13 +4542,16 @@ if (typeof module !== 'undefined') {
     const plan = state.plan;
     if (!plan) return;
     const body = document.getElementById('field-card-body');
+    const sm = plan.stakeMeta;
+    const packLine = (plan.packingSummary || []).map(x => `${x.icon}${x.name} ${x.val}`).join(' · ');
     body.innerHTML = `
-      <div style="margin-bottom:10px;font-size:12px;color:#475569;">
-        <strong>${escHtml(plan.input.projectName)}</strong> · ${escHtml(RENDER.posLabel(plan.input.pos))} · 最终限速 <strong>${plan.Vf}km/h</strong>
+      <div style="margin-bottom:8px;font-size:12px;color:#475569;">
+        <strong>${escHtml(plan.input.projectName)}</strong> · ${sm ? escHtml(sm.dirLabel) : ''} · ${escHtml(RENDER.posLabel(plan.input.pos))} · 最终限速 <strong>${plan.Vf}km/h</strong>
       </div>
+      ${packLine ? `<div style="margin-bottom:10px;padding:6px 8px;background:#fff7ed;border:1px solid #fed7aa;border-radius:6px;font-size:11.5px;color:#9a3412;"><strong>装车备料：</strong>${escHtml(packLine)}</div>` : ''}
       ${plan.coords.map((c, idx) => `
         <div class="field-card-step">
-          <div class="field-card-dist">第 ${idx + 1} 站 · ${escHtml(c.atLabel)}</div>
+          <div class="field-card-dist">第 ${idx + 1} 站 · ${c.stakeLabel ? `${escHtml(c.stakeLabel)} · ` : ''}${escHtml(c.atLabel)}</div>
           <div style="font-weight:700;">${escHtml(c.item)}</div>
           <div style="font-size:12px;color:#475569;">${escHtml(c.detail)}</div>
         </div>
@@ -4128,8 +4641,15 @@ if (typeof module !== 'undefined') {
     // 恢复缓存状态
     const savedTables = loadJson(LS_KEYS.tables, null);
     if (savedTables) state.customTables = savedTables;
+    const savedPrefs = loadJson(LS_KEYS.prefs, null);
     const savedCurrent = loadJson(LS_KEYS.current, null);
-    if (savedCurrent) state.input = Object.assign({}, state.input, savedCurrent);
+    if (savedCurrent) {
+      state.input = Object.assign({}, state.input, savedCurrent);
+    } else if (savedPrefs) {
+      state.input = Object.assign({}, state.input, savedPrefs);
+    }
+    const savedUiMode = loadJson(LS_KEYS.uiMode, 'simple');
+    state.uiMode = savedUiMode === 'pro' ? 'pro' : 'simple';
     state.checked = loadJson(LS_KEYS.checklist, {});
     state.checkNotes = loadJson(LS_KEYS.notes, {});
 
@@ -4151,24 +4671,27 @@ if (typeof module !== 'undefined') {
         const tpl = SCENARIO_TEMPLATES.find(x => x.id === btn.getAttribute('data-tpl'));
         if (!tpl) return;
         state.activeTplId = tpl.id;
+        const userPrefs = loadJson(LS_KEYS.prefs, null);
         state.input = Object.assign({}, state.input, {
           rampLength: 300, night: false, hasStrobe: false, hasLighting: false,
           remWidthOverride: '', inBridge: false, inTunnel: false,
           signStrategy: 'A', lsTrack: 'A', coneDensity: 1.0, coneSpare: false
-        }, tpl.patch);
+        }, tpl.patch, userPrefs || {});
         syncFormFromInput();
         recompute();
-        showToast(`已载入工况模板：${tpl.name}`);
+        showToast(`已载入工况模板：${tpl.name}${userPrefs ? '（已保留常用路段与方向）' : ''}`);
       });
     });
 
     // 分段开关绑定
+    const prefFields = new Set(['projectName', 'company', 'stakeNo', 'stakeDirection', 'stakeAnchor']);
     document.querySelectorAll('[data-seg-for]').forEach(seg => {
       const k = seg.getAttribute('data-seg-for');
       seg.querySelectorAll('.seg-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           state.activeTplId = null;
           state.input[k] = btn.getAttribute('data-seg-val');
+          if (prefFields.has(k)) saveUserPrefs();
           syncFormFromInput();
           recompute();
         });
@@ -4177,9 +4700,11 @@ if (typeof module !== 'undefined') {
 
     // 绑定所有表单输入：即时重算 (§12.1)
     document.querySelectorAll('[data-field]').forEach(el => {
+      const k = el.getAttribute('data-field');
       const handler = () => {
         state.activeTplId = null;
         readInputFromForm();
+        if (prefFields.has(k)) saveUserPrefs();
         syncFormFromInput();
         recompute();
       };
@@ -4227,6 +4752,7 @@ if (typeof module !== 'undefined') {
     document.getElementById('btn-field-card').addEventListener('click', openFieldCardModal);
     document.getElementById('btn-copy-brief-top').addEventListener('click', copyFieldScript);
     document.getElementById('btn-copy-coords').addEventListener('click', copyFieldScript);
+    document.getElementById('btn-copy-packing').addEventListener('click', copyPackingText);
     document.getElementById('btn-copy-field-card').addEventListener('click', copyFieldScript);
     document.getElementById('btn-quick-print').addEventListener('click', () => {
       document.querySelector('[data-tab="tab-briefing"]').click();
@@ -4249,8 +4775,25 @@ if (typeof module !== 'undefined') {
         recompute();
       });
     });
+    document.querySelectorAll('[data-quick-duration]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const v = Number(btn.getAttribute('data-quick-duration'));
+        state.activeTplId = null;
+        state.input.duration = v;
+        state.input.typeOverride = 'auto';
+        syncFormFromInput();
+        recompute();
+      });
+    });
+    document.querySelectorAll('#sidebar-mode-tabs .mode-tab').forEach(btn => {
+      btn.addEventListener('click', () => setUiMode(btn.getAttribute('data-ui-mode'), false));
+    });
+    const openProBtn = document.getElementById('btn-open-pro-mode');
+    if (openProBtn) {
+      openProBtn.addEventListener('click', () => setUiMode('pro', false));
+    }
 
-    window.UI_ACTIONS = { applyQuickFix, resetToDefault, buildFieldBriefText, exportSvg };
+    window.UI_ACTIONS = { applyQuickFix, resetToDefault, buildFieldBriefText, exportSvg, setUiMode };
 
     // JSON 导出/导入
     document.getElementById('btn-export-json').addEventListener('click', () => {
@@ -4333,6 +4876,7 @@ if (typeof module !== 'undefined') {
       });
     });
 
+    setUiMode(state.uiMode, true);
     syncFormFromInput();
     recompute();
     renderNormConfigTab();
